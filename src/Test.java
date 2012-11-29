@@ -9,6 +9,8 @@ public class Test {
 	public static void main(String args[]) throws Exception{
 		SCAPersistenciaArquivo arq = new SCAPersistenciaArquivo();
 		
+		
+		
 		List<Disciplina> disci1 = new ArrayList<Disciplina>();
 		Disciplina disci =  new Disciplina();
 		disci.setCodigo(1234);
