@@ -9,11 +9,9 @@ import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
+import poo.sca.Curso;
 import poo.sca.Disciplina;
 import poo.sca.Professor;
 import poo.sca.Turma;
@@ -22,8 +20,9 @@ public class SCAPersistenciaArquivo implements SCAPersistencia{
 	static String caminhoT = "Arquivos/Turmas/turmas.ser";
 	static String caminhoD = "Arquivos/Disciplinas/disciplinas.ser";
 	static String caminhoP = "Arquivos/Professores/professores.ser";
+	static String caminhoC = "Arquivos/Cursos/cursos.ser";
 
-	public void salvarTurma(List<Turma> turma) throws Exception {
+	public void salvarTurmas(List<Turma> turma) throws SCAPersistenciaException {
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		
@@ -32,46 +31,42 @@ public class SCAPersistenciaArquivo implements SCAPersistencia{
 			fos = new FileOutputStream(caminhoT);
 			oos = new ObjectOutputStream(fos);
 			oos.writeObject(turma);
-		}catch(FileNotFoundException erro1){
-			erro1.printStackTrace();
-		}catch (IOException e){
-			e.printStackTrace();
-		}finally{
 			fos.close();
 			oos.close();
-		}		
-		
+		}catch(FileNotFoundException erro1){
+			throw new SCAPersistenciaException("Arquivo Não Encontrado");
+		}catch (IOException e){
+			throw new SCAPersistenciaException("IO Error!");
+		}
 	}
 
-
-	public ArrayList<Turma> recuperarTurmas() throws Exception {
+	public List<Turma> recuperarTurmas() throws SCAPersistenciaException, ClassNotFoundException {
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
-		ArrayList<Turma> turmas = null;
+		List<Turma> turmas = null;
 		boolean file = new File("Arquivos/Turmas").mkdirs();
 		try{
 			fis = new FileInputStream(caminhoT);
 			ois = new ObjectInputStream(fis);
-			turmas = (ArrayList<Turma>) ois.readObject();
-		}catch(StreamCorruptedException erro){
-			erro.printStackTrace();
-		}catch(InvalidClassException erro){
-			erro.printStackTrace();
-		}catch(FileNotFoundException erro1){
-			erro1.printStackTrace();
-		}catch (IOException e){
-			e.printStackTrace();
-		}finally{
+			turmas = (List<Turma>) ois.readObject();
 			fis.close();
 			ois.close();
+		}catch(StreamCorruptedException erro){
+			throw new SCAPersistenciaException("StreamCorruptedException Error!");
+		}catch(InvalidClassException erro){
+			throw new SCAPersistenciaException("InvalidClass Error!");
+		}catch(FileNotFoundException erro1){
+			this.salvarTurmas(turmas);
+			throw new SCAPersistenciaException("Arquivo Não Encontrado");
+		}catch (IOException e){
+			throw new SCAPersistenciaException("Erro de Arquivo!");
 		}
 		return turmas;
 		
 
 	}
 
-
-	public void salvarDisciplina(List<Disciplina> disciplina) throws Exception {
+	public void salvarDisciplinas(List<Disciplina> disciplina) throws SCAPersistenciaException {
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		
@@ -80,39 +75,37 @@ public class SCAPersistenciaArquivo implements SCAPersistencia{
 			fos = new FileOutputStream(caminhoD);
 			oos = new ObjectOutputStream(fos);
 			oos.writeObject(disciplina);
-		}catch(FileNotFoundException erro1){
-			erro1.printStackTrace();
-		}catch (IOException e){
-			e.printStackTrace();
-		}finally{
 			fos.close();
 			oos.close();
+		}catch(FileNotFoundException erro1){
+			throw new SCAPersistenciaException("Arquivo Não Encontrado");
+		}catch (IOException e){
+			throw new SCAPersistenciaException("IO Error!");
 		}		
 		
 	}
 
-
-	@Override
-	public ArrayList<Disciplina> recuperarDisciplinas() throws Exception {
+	
+	public List<Disciplina> recuperarDisciplinas() throws SCAPersistenciaException, ClassNotFoundException  {
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
-		ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
+		List<Disciplina> disciplinas = null;
 		boolean file = new File("Arquivos/Disciplinas").mkdirs();
 		try{
-			fis = new FileInputStream(caminhoT);
+			fis = new FileInputStream(caminhoD);
 			ois = new ObjectInputStream(fis);
-			disciplinas = (ArrayList<Disciplina>) ois.readObject();
-		}catch(StreamCorruptedException erro){
-			erro.printStackTrace();
-		}catch(InvalidClassException erro){
-			erro.printStackTrace();
-		}catch(FileNotFoundException erro1){
-			erro1.printStackTrace();
-		}catch (IOException e){
-			e.printStackTrace();
-		}finally{
+			disciplinas = (List<Disciplina>) ois.readObject();
 			fis.close();
 			ois.close();
+		}catch(StreamCorruptedException erro){
+			throw new SCAPersistenciaException("StreamCorruptedException Error!");
+		}catch(InvalidClassException erro){
+			throw new SCAPersistenciaException("InvalidClass Error!");
+		}catch(FileNotFoundException erro1){
+			this.salvarDisciplinas(disciplinas);
+			throw new SCAPersistenciaException("Arquivo Não Encontrado");
+		}catch (IOException e){
+			throw new SCAPersistenciaException("Erro de Arquivo!");
 		}
 		
 		return disciplinas;
@@ -120,8 +113,7 @@ public class SCAPersistenciaArquivo implements SCAPersistencia{
 
 	}
 
-	@Override
-	public void salvarProfessores(List<Professor> professor) throws Exception {
+	public void salvarProfessores(List<Professor> professor) throws SCAPersistenciaException {
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		
@@ -130,21 +122,17 @@ public class SCAPersistenciaArquivo implements SCAPersistencia{
 			fos = new FileOutputStream(caminhoP);
 			oos = new ObjectOutputStream(fos);
 			oos.writeObject(professor);
-		}catch(FileNotFoundException erro1){
-			erro1.printStackTrace();
-		}catch (IOException e){
-			e.printStackTrace();
-		}finally{
 			fos.close();
 			oos.close();
+		}catch(FileNotFoundException erro1){
+			throw new SCAPersistenciaException("Arquivo Não Encontrado");
+		}catch (IOException e){
+			throw new SCAPersistenciaException("IO Error!");
 		}		
 		
 	}
-		
 
-
-
-	public List<Professor> recuperarProfessores() throws Exception {
+	public List<Professor> recuperarProfessores() throws SCAPersistenciaException, ClassNotFoundException  {
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
 		List<Professor> professores = null;
@@ -152,21 +140,66 @@ public class SCAPersistenciaArquivo implements SCAPersistencia{
 		try{
 			fis = new FileInputStream(caminhoP);
 			ois = new ObjectInputStream(fis);
-			professores = (ArrayList<Professor>) ois.readObject();
-		}catch(StreamCorruptedException erro){
-			erro.printStackTrace();
-		}catch(InvalidClassException erro){
-			erro.printStackTrace();
-		}catch(FileNotFoundException erro1){
-			erro1.printStackTrace();
-		}catch (IOException e){
-			e.printStackTrace();
-		}finally{
+			professores = (List<Professor>) ois.readObject();
 			fis.close();
 			ois.close();
+		}catch(StreamCorruptedException erro){
+			throw new SCAPersistenciaException("StreamCorruptedException Error!");
+		}catch(InvalidClassException erro){
+			throw new SCAPersistenciaException("InvalidClass Error!");
+		}catch(FileNotFoundException erro1){
+			this.salvarProfessores(professores);
+			throw new SCAPersistenciaException("Arquivo Não Encontrado");
+		}catch (IOException e){
+			throw new SCAPersistenciaException("Erro de Arquivo!");
 		}
 		
 		return professores;
+		
+
+	}
+
+	public void salvarCursos(List<Curso> curso) throws SCAPersistenciaException {
+		FileOutputStream fos = null;
+		ObjectOutputStream oos = null;
+		
+		boolean file = new File("Arquivos/Cursos").mkdirs();
+		try{
+			fos = new FileOutputStream(caminhoC);
+			oos = new ObjectOutputStream(fos);
+			oos.writeObject(curso);
+			fos.close();
+			oos.close();
+		}catch(FileNotFoundException erro1){
+			throw new SCAPersistenciaException("Arquivo Não Encontrado");
+		}catch (IOException e){
+			throw new SCAPersistenciaException("IO Error!");
+		}		
+		
+	}
+
+	public List<Curso> recuperarCursos() throws SCAPersistenciaException, ClassNotFoundException  {
+		FileInputStream fis = null;
+		ObjectInputStream ois = null;
+		List<Curso> cursos = null;
+		boolean file = new File("Arquivos/Cursos").mkdirs();
+		try{
+			fis = new FileInputStream(caminhoC);
+			ois = new ObjectInputStream(fis);
+			cursos = (List<Curso>) ois.readObject();
+			fis.close();
+			ois.close();
+		}catch(StreamCorruptedException erro){
+			throw new SCAPersistenciaException("StreamCorruptedException Error!");
+		}catch(InvalidClassException erro){
+			throw new SCAPersistenciaException("InvalidClass Error!");
+		}catch(FileNotFoundException erro1){
+			this.salvarCursos(cursos);
+			throw new SCAPersistenciaException("Arquivo Não Encontrado");
+		}catch (IOException e){
+			throw new SCAPersistenciaException("Erro de Arquivo!");
+		}
+		return cursos;
 		
 
 	}
