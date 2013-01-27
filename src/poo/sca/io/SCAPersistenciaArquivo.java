@@ -14,6 +14,7 @@ import java.util.List;
 import poo.sca.Curso;
 import poo.sca.Disciplina;
 import poo.sca.Professor;
+import poo.sca.SCAFacadeException;
 import poo.sca.Turma;
 
 public class SCAPersistenciaArquivo implements SCAPersistencia{
@@ -40,7 +41,7 @@ public class SCAPersistenciaArquivo implements SCAPersistencia{
 		}
 	}
 
-	public List<Turma> recuperarTurmas() throws SCAPersistenciaException, ClassNotFoundException {
+	public List<Turma> recuperarTurmas() throws SCAPersistenciaException{
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
 		List<Turma> turmas = null;
@@ -60,6 +61,8 @@ public class SCAPersistenciaArquivo implements SCAPersistencia{
 			throw new SCAPersistenciaException("Arquivo Não Encontrado");
 		}catch (IOException e){
 			throw new SCAPersistenciaException("Erro de Arquivo!");
+		}catch(ClassNotFoundException e){
+			throw new SCAPersistenciaException(e.getMessage());
 		}
 		return turmas;
 		
@@ -86,7 +89,7 @@ public class SCAPersistenciaArquivo implements SCAPersistencia{
 	}
 
 	
-	public List<Disciplina> recuperarDisciplinas() throws SCAPersistenciaException, ClassNotFoundException  {
+	public List<Disciplina> recuperarDisciplinas() throws SCAPersistenciaException{
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
 		List<Disciplina> disciplinas = null;
@@ -106,6 +109,8 @@ public class SCAPersistenciaArquivo implements SCAPersistencia{
 			throw new SCAPersistenciaException("Arquivo Não Encontrado");
 		}catch (IOException e){
 			throw new SCAPersistenciaException("Erro de Arquivo!");
+		}catch(ClassNotFoundException e){
+			throw new SCAPersistenciaException(e.getMessage());
 		}
 		
 		return disciplinas;
@@ -132,7 +137,7 @@ public class SCAPersistenciaArquivo implements SCAPersistencia{
 		
 	}
 
-	public List<Professor> recuperarProfessores() throws SCAPersistenciaException, ClassNotFoundException  {
+	public List<Professor> recuperarProfessores() throws SCAPersistenciaException{
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
 		List<Professor> professores = null;
@@ -152,6 +157,8 @@ public class SCAPersistenciaArquivo implements SCAPersistencia{
 			throw new SCAPersistenciaException("Arquivo Não Encontrado");
 		}catch (IOException e){
 			throw new SCAPersistenciaException("Erro de Arquivo!");
+		}catch(ClassNotFoundException e){
+			throw new SCAPersistenciaException(e.getMessage());
 		}
 		
 		return professores;
@@ -178,7 +185,7 @@ public class SCAPersistenciaArquivo implements SCAPersistencia{
 		
 	}
 
-	public List<Curso> recuperarCursos() throws SCAPersistenciaException, ClassNotFoundException  {
+	public List<Curso> recuperarCursos() throws SCAPersistenciaException{
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
 		List<Curso> cursos = null;
@@ -198,6 +205,8 @@ public class SCAPersistenciaArquivo implements SCAPersistencia{
 			throw new SCAPersistenciaException("Arquivo Não Encontrado");
 		}catch (IOException e){
 			throw new SCAPersistenciaException("Erro de Arquivo!");
+		}catch(ClassNotFoundException e){
+			throw new SCAPersistenciaException(e.getMessage());
 		}
 		return cursos;
 		

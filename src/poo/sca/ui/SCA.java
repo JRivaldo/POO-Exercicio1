@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import poo.sca.Curso;
 import poo.sca.Disciplina;
 import poo.sca.Professor;
+import poo.sca.RuntimeSCAException;
 import poo.sca.SCAFacade;
 import poo.sca.SCAFacadeException;
 import poo.sca.Turma;

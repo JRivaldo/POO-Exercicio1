@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 
 import poo.sca.Disciplina;
 import poo.sca.SCAFacade;
@@ -19,12 +18,12 @@ public class Test {
 		
 		
 		//List<Disciplina> disci2 = new ArrayList<Disciplina>();
-		Disciplina disci =  new Disciplina();
-		disci.setCodigo(1237);
-		disci.setNome("POO");
+		Disciplina disci =  arq.getDisciplinasIterator().next();
 		//disci2.add(disci);
-		//arq.criarDisciplina(1237, "POO");
+		//Disciplina disci2 =  arq.getDisciplinasIterator().next();
 		
+		//arq.criarDisciplina(1237, "POO");
+		System.out.println(disci.getNome());
 		
 		
 		/*for(Disciplina dis : disci1){
@@ -35,8 +34,8 @@ public class Test {
 		/*String entr = JOptionPane.showInputDialog("Infome um valor: ");
 		int lol = Integer.parseInt(entr);*/
 		
-		System.out.println(arq2.mostrarDisciplinas());
-		System.out.println(arq2.mostrarTurmas());
+		//System.out.println(arq2.mostrarDisciplinas());
+		//System.out.println(arq2.mostrarTurmas());
 	}
 
 }
